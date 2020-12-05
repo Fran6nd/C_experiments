@@ -1,39 +1,8 @@
 #!/usr/local/bin/tcc -run
-#include <stdio.h>
-#include <stdlib.h>
+#include "list.h"
 
-#define LIST_DEFINE(TYPE, name) \
-    typedef struct              \
-    {                           \
-        int size;               \
-        int elm_size;           \
-        TYPE *list;             \
-    } name
 
-#define LIST_NEW(name, l)     \
-    l = malloc(sizeof(name)); \
-    l->size = 0;              \
-    l->list = NULL
-
-#define LIST_ADD(l, element)                                                    \
-    l->size += 1;                                                               \
-    if (l->size == 1)                                                           \
-    {                                                                           \
-        l->list = malloc(sizeof(element));                                      \
-    }                                                                           \
-    else                                                                        \
-    {                                                                           \
-        l->list = (typeof(l->list))realloc(l->list, sizeof(element) * l->size); \
-    }                                                                           \
-    l->list[l->size - 1] = element
-
-#define LIST_FREE(l)   \
-    if (l->size != 0)  \
-    {                  \
-        free(l->list); \
-    }                  \
-    l->size = 0;       \
-    free(l)
+#define PRINT_DELIMITER() printf("-------------\n");
 
 LIST_DEFINE(int, maliste);
 
@@ -45,9 +14,38 @@ int main()
     LIST_ADD(ml, 1);
     LIST_ADD(ml, 3);
     LIST_ADD(ml, 1);
-    for(int i = 0; i < ml->size; i++){
+    LIST_FOREACH(ml, elem)
+    {
+        printf("%d\n", *elem);
+    }
+    PRINT_DELIMITER();
+    LIST_FREE(ml);
+    LIST_NEW(maliste, ml);
+    LIST_ADD(ml, 1);
+    LIST_ADD(ml, 4);
+    LIST_ADD(ml, 3);
+    LIST_ADD(ml, 13);
+    LIST_FOR(ml, i)
+    {
         printf("%d\n", ml->list[i]);
     }
+    PRINT_DELIMITER()
+    LIST_POP_INDEX(ml, 1);
+    LIST_FOREACH(ml, elem)
+    {
+        printf("%d\n", *elem);
+    }
+    PRINT_DELIMITER()
+    LIST_FREE(ml);
+    LIST_NEW(maliste, ml);
+    LIST_ADD(ml, 1);
+    LIST_POP_INDEX(ml, 0);
+    LIST_ADD(ml, 2);
+    LIST_FOR(ml, i)
+    {
+        printf("%d\n", ml->list[i]);
+    }
+    PRINT_DELIMITER();
     LIST_FREE(ml);
     return 0;
 }

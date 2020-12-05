@@ -15,16 +15,16 @@
     l->size = 0;              \
     l->list = NULL
 
-#define LIST_ADD(l, element)                                   \
-    l->size += 1;                                              \
-    if (l->size == 1)                                          \
-    {                                                          \
-        l->list = malloc(sizeof(element));                     \
-    }                                                          \
-    else                                                       \
-    {                                                          \
-        l->list = realloc(l->list, sizeof(element) * l->size); \
-    }                                                          \
+#define LIST_ADD(l, element)                                                    \
+    l->size += 1;                                                               \
+    if (l->size == 1)                                                           \
+    {                                                                           \
+        l->list = malloc(sizeof(element));                                      \
+    }                                                                           \
+    else                                                                        \
+    {                                                                           \
+        l->list = (typeof(l->list))realloc(l->list, sizeof(element) * l->size); \
+    }                                                                           \
     l->list[l->size - 1] = element
 
 #define LIST_FREE(l)   \
@@ -32,6 +32,7 @@
     {                  \
         free(l->list); \
     }                  \
+    l->size = 0;       \
     free(l)
 
 LIST_DEFINE(int, maliste);
@@ -41,6 +42,12 @@ int main()
     maliste *ml;
     LIST_NEW(maliste, ml);
     LIST_ADD(ml, 1);
+    LIST_ADD(ml, 1);
+    LIST_ADD(ml, 3);
+    LIST_ADD(ml, 1);
+    for(int i = 0; i < ml->size; i++){
+        printf("%d\n", ml->list[i]);
+    }
     LIST_FREE(ml);
     return 0;
 }

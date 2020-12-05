@@ -16,12 +16,11 @@
 
 #define LIST_ADD(list, element)
 
-#define LIST_FREE(l) \
-    if(l->size != 0)\
-    {\
-     \
-\
-    } \
+#define LIST_FREE(l)   \
+    if (l->size != 0)  \
+    {                  \
+        free(l->list); \
+    }                  \
     free(l)
 
 LIST_DEFINE(int, maliste);

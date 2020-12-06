@@ -42,28 +42,28 @@
 #define DICT_FOREACH(dict, key) \
     LIST_FOREACH(dict.index, key)
 
-#define DICT_GET(dict, key, dest_ptr)             \
-    dest_ptr = NULL;                              \
-    LIST_FOR(dict.index, i)                       \
-    {                                             \
-        if (strcmp(key, dict.index.list[i]) == 0) \
-        {                                         \
-            dest_ptr = &dict.data.list[i];        \
-        }                                         \
+#define DICT_GET(dict, key, dest_ptr)                      \
+    dest_ptr = NULL;                                       \
+    LIST_FOR(dict.index, i_dict_get)                       \
+    {                                                      \
+        if (strcmp(key, dict.index.list[i_dict_get]) == 0) \
+        {                                                  \
+            dest_ptr = &dict.data.list[i_dict_get];        \
+        }                                                  \
     }
 
-#define DICT_POP(dict, key)                                                                \
-    {                                                                                      \
-        LIST_FOR(dict.index, i)                                                            \
-        {                                                                                  \
-            if (strcmp(key, dict.index.list[i]) == 0)                                      \
-            {                                                                              \
-                LIST_POP_INDEX(dict.index, i);                                             \
-                LIST_POP_INDEX(dict.data, i);                                              \
-                dict.size--;                                                               \
-                break;                                                                     \
-            }                                                                              \
-        }                                                                                  \
+#define DICT_POP(dict, key)                                    \
+    {                                                          \
+        LIST_FOR(dict.index, i_dict_pop)                       \
+        {                                                      \
+            if (strcmp(key, dict.index.list[i_dict_pop]) == 0) \
+            {                                                  \
+                LIST_POP_INDEX(dict.index, i_dict_pop);        \
+                LIST_POP_INDEX(dict.data, i_dict_pop);         \
+                dict.size--;                                   \
+                break;                                         \
+            }                                                  \
+        }                                                      \
     }
 
 #define DICT_FREE(dict)    \

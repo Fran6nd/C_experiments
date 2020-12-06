@@ -17,7 +17,10 @@ int main()
     }
     int a;
     DICT_GET(ls, "sdf", a);
-    printf("%d\n", a);
+    printf("sdf -> %d\n", a);
+    printf("error -> %d\n", ls.error);
+    DICT_GET(ls, "sdffefefe", a);
+    printf("error -> %d\n", ls.error);
     PRINT_DELIMITER();
     return 0;
 }

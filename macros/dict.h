@@ -39,14 +39,13 @@
 #define DICT_FOREACH(dict, key) \
     LIST_FOREACH(dict.index, key)
 
-#define DICT_GET(dict, key)                       \
+#define DICT_GET(dict, key, dest)                 \
     LIST_FOR(dict.index, i)                       \
     {                                             \
         if (strcmp(key, dict.index.list[i]) == 0) \
         {                                         \
+            dest = dict.data.list[i];             \
         }                                         \
-    }                                             \
-    printf("Error: key unexisting.\n");           \
-    exit(-1);
+    }
 
 #endif

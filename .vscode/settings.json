@@ -12,6 +12,7 @@
         "vector": "c",
         "chrono": "c",
         "typeinfo": "c",
-        "list": "cpp"
+        "list": "cpp",
+        "type_traits": "cpp"
     }
 }

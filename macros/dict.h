@@ -52,18 +52,18 @@
         }                                         \
     }
 
-#define DICT_POP(dict, key)                           \
-    {                                                 \
-        LIST_FOR(dict.index, i)                       \
-        {                                             \
-            if (strcmp(key, dict.index.list[i]) == 0) \
-            {                                         \
-                printf("i=%d\n", i);                  \
-                LIST_POP_INDEX(dict.index, 1);        \
-                LIST_POP_INDEX(dict.data, 1);         \
-                break;                                \
-            }                                         \
-        }                                             \
+#define DICT_POP(dict, key)                                                                \
+    {                                                                                      \
+        LIST_FOR(dict.index, i)                                                            \
+        {                                                                                  \
+            if (strcmp(key, dict.index.list[i]) == 0)                                      \
+            {                                                                              \
+                LIST_POP_INDEX(dict.index, i);                                             \
+                LIST_POP_INDEX(dict.data, i);                                              \
+                dict.size--;                                                               \
+                break;                                                                     \
+            }                                                                              \
+        }                                                                                  \
     }
 
 #define DICT_FREE(dict)    \

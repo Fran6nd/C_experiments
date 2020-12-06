@@ -1,4 +1,4 @@
-//#!/usr/local/bin/tcc -run
+#!/usr/local/bin/tcc -run
 #include "dict.h"
 
 
@@ -12,21 +12,18 @@ int main()
     DICT_ADD(ls,"sdfg", 3);
     DICT_ADD(ls,"sdfgf", 2);
     printf("%d\n", ls.size);
-    int * a;
-    DICT_GET(ls, "sdf", a);
-    printf("sdf -> %d\n", *a);
     DICT_FOREACH(ls, k){
         int * b;
         DICT_GET(ls, *k, b);
         printf("%s <=> %d\n", *k, *b);
     }
     PRINT_DELIMITER();
-    DICT_POP(ls, "sdfg");
+    DICT_POP(ls, "sdf");
     DICT_FOREACH(ls, k){
         int * b;
         DICT_GET(ls, *k, b);
         printf("%s <=> %d\n", *k, *b);
     }
-    DICT_FREE(ls);
+    //DICT_FREE(ls);
     return 0;
 }

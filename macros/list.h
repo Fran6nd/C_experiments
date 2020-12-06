@@ -70,9 +70,9 @@ int LIST_COUNT = 0;
     {                                                                         \
         l.free(l.list[index]);                                                \
     }                                                                         \
-    for (int i = index; i < l.size - 1; i++)                                  \
+    for (int i_pop = index; i_pop < l.size - 1; i_pop++)                      \
     {                                                                         \
-        l.list[i] = l.list[i + 1];                                            \
+        l.list[i_pop] = l.list[i_pop + 1];                                    \
     }                                                                         \
     l.size--;                                                                 \
     if (l.size > 0)                                                           \

@@ -42,8 +42,7 @@ int LIST_COUNT = 0;
     {                                                                       \
         l.list = (typeof(l.list))realloc(l.list, sizeof(element) * l.size); \
     }                                                                       \
-    l.list[l.size - 1] = element;                                           \
-    l.size - 1
+    l.list[l.size - 1] = element;
 
 #define LIST_FOREACH(l, elem) \
     for (typeof(l.list) elem = l.list; elem < l.list + l.size; elem++)

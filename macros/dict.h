@@ -42,14 +42,33 @@
 #define DICT_FOREACH(dict, key) \
     LIST_FOREACH(dict.index, key)
 
-#define DICT_GET(dict, key, dest)                 \
-    dest = NULL;                                  \
+#define DICT_GET(dict, key, dest_ptr)             \
+    dest_ptr = NULL;                              \
     LIST_FOR(dict.index, i)                       \
     {                                             \
         if (strcmp(key, dict.index.list[i]) == 0) \
         {                                         \
-            dest = &dict.data.list[i];            \
+            dest_ptr = &dict.data.list[i];        \
         }                                         \
     }
+
+#define DICT_POP(dict, key)                           \
+    {                                                 \
+        LIST_FOR(dict.index, i)                       \
+        {                                             \
+            if (strcmp(key, dict.index.list[i]) == 0) \
+            {                                         \
+                printf("i=%d\n", i);                  \
+                LIST_POP_INDEX(dict.index, 1);        \
+                LIST_POP_INDEX(dict.data, 1);         \
+                break;                                \
+            }                                         \
+        }                                             \
+    }
+
+#define DICT_FREE(dict)    \
+    LIST_FREE(dict.index); \
+    LIST_FREE(dict.data);  \
+    dict.size = 0;
 
 #endif

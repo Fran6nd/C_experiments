@@ -12,6 +12,7 @@ int main()
     LIST_ADD(ml, 1);
     LIST_ADD(ml, 3);
     LIST_ADD(ml, 1);
+    LIST_POP_INDEX(ml, 0);
     LIST_FOREACH(ml, elem)
     {
         printf("%d\n", *elem);
@@ -32,7 +33,7 @@ int main()
         printf("%d\n", i);
     }
     PRINT_DELIMITER();
-    LIST_POP_INDEX(mls, 1);
+    LIST_POP_INDEX(mls, 0);
     LIST_FOR(mls, i)
     {
         printf("%d\n", i);

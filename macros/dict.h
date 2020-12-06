@@ -1,3 +1,5 @@
+/* WORK IN PROGRESS, NOT WORKING AT 100% YET! */
+
 #ifndef DICT_H
 #define DICT_H
 

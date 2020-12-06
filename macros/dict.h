@@ -13,7 +13,6 @@
         LIST_DEFINE(index, char *); \
         LIST_DEFINE(data, type);    \
         int size;                   \
-        int error;                  \
     } name;                         \
     name.index.size = 0;            \
     name.index.list = NULL;         \
@@ -21,8 +20,7 @@
     name.data.size = 0;             \
     name.data.list = NULL;          \
     name.data.free = NULL;          \
-    name.size = 0;                  \
-    name.error = 0
+    name.size = 0;
 
 #define DICT_ADD(dict, key, elem)                                    \
     {                                                                \
@@ -45,13 +43,12 @@
     LIST_FOREACH(dict.index, key)
 
 #define DICT_GET(dict, key, dest)                 \
-    dict.error = 1;                               \
+    dest = NULL;                                  \
     LIST_FOR(dict.index, i)                       \
     {                                             \
         if (strcmp(key, dict.index.list[i]) == 0) \
         {                                         \
-            dest = dict.data.list[i];             \
-            dict.error = 0;                       \
+            dest = &dict.data.list[i];            \
         }                                         \
     }
 

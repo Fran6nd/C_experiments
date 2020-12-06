@@ -15,12 +15,11 @@ int main()
     DICT_FOREACH(ls, k){
         printf("%s\n", *k);
     }
-    int a;
+    int * a;
     DICT_GET(ls, "sdf", a);
-    printf("sdf -> %d\n", a);
-    printf("error -> %d\n", ls.error);
+    printf("sdf -> %d\n", *a);
     DICT_GET(ls, "sdffefefe", a);
-    printf("error -> %d\n", ls.error);
+    printf("in null -> %d\n", a == NULL);
     PRINT_DELIMITER();
     return 0;
 }

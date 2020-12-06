@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
- /* How many lists are active and need to be freed. */
+/* How many lists are active and need to be freed. */
 int LIST_COUNT = 0;
 
 /* 
@@ -72,7 +72,7 @@ int LIST_COUNT = 0;
         {                         \
             LIST_FOREACH(l, elem) \
             {                     \
-                l->free(elem);    \
+                l->free(*elem);   \
             }                     \
         }                         \
         free(l->list);            \

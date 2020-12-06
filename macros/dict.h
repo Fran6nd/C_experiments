@@ -10,6 +10,7 @@
     {                               \
         LIST_DEFINE(index, char *); \
         LIST_DEFINE(data, type);    \
+        int size;                   \
     } name;                         \
     name.index.size = 0;            \
     name.index.list = NULL;         \
@@ -32,7 +33,9 @@
         }                                                            \
         LIST_ADD(dict.index, key_malloc);                            \
         LIST_ADD(dict.data, elem);                                   \
+        dict.size++;                                                 \
     }
+
 #define DICT_FOREACH(dict, key) \
     LIST_FOREACH(dict.index, key)
 

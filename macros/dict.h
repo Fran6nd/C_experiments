@@ -26,11 +26,15 @@
         {                                                            \
             if (strcmp(key_malloc, *key1) == 0)                      \
             {                                                        \
+                printf("Error: key already existing.\n");            \
                 exit(-1);                                            \
             }                                                        \
         }                                                            \
         LIST_ADD(dict.index, key_malloc);                            \
         LIST_ADD(dict.data, elem);                                   \
     }
+#define DICT_FOREACH(dict, key)\
+    LIST_FOREACH(dict.index, key)
+
 
 #endif

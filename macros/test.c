@@ -19,11 +19,20 @@ int main()
     }
     PRINT_DELIMITER();
     DICT_POP(ls, "sdf");
+    DICT_POP(ls, "sd");
+    DICT_POP(ls, "sdfg");
     DICT_FOREACH(ls, k){
         int * b;
         DICT_GET(ls, *k, b);
         printf("%s <=> %d\n", *k, *b);
     }
-    //DICT_FREE(ls);
+    DICT_POP(ls, "sdfgf");
+    PRINT_DELIMITER();
+    DICT_FOREACH(ls, k){
+        int * b;
+        DICT_GET(ls, *k, b);
+        printf("%s <=> %d\n", *k, *b);
+    }
+    DICT_FREE(ls);
     return 0;
 }

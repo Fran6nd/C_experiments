@@ -7,63 +7,70 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define DICT_NEW(name, type)        \
-    struct name##_DICT              \
-    {                               \
-        LIST_DEFINE(index, char *); \
-        LIST_DEFINE(data, type);    \
-        int size;                   \
-    } name;                         \
-    name.index.size = 0;            \
-    name.index.list = NULL;         \
-    name.index.free = free;         \
-    name.data.size = 0;             \
-    name.data.list = NULL;          \
-    name.data.free = NULL;          \
+#define DICT_INTERN_VAR(name) DICT_INTERNAL_VARIABLE_##name
+
+static inline void free_str(char *str)
+{
+    free((void *)str);
+}
+
+#define DICT_NEW(name, type)         \
+    struct name##_DICT               \
+    {                                \
+        LIST_DEFINE(index, char *);  \
+        LIST_DEFINE(data, type);     \
+        int size;                    \
+    } name;                          \
+    name.index.size = 0;             \
+    name.index.list = NULL;          \
+    name.index.free_elem = free_str; \
+    name.data.size = 0;              \
+    name.data.list = NULL;           \
+    name.data.free_elem = NULL;      \
     name.size = 0;
 
-#define DICT_ADD(dict, key, elem)                                    \
-    {                                                                \
-        char *key_malloc = malloc((strlen(key) + 1) * sizeof(char)); \
-        strcpy(key_malloc, key);                                     \
-        LIST_FOREACH(dict.index, key1)                               \
-        {                                                            \
-            if (strcmp(key_malloc, *key1) == 0)                      \
-            {                                                        \
-                printf("Error: key already existing.\n");            \
-                exit(-1);                                            \
-            }                                                        \
-        }                                                            \
-        LIST_ADD(dict.index, key_malloc);                            \
-        LIST_ADD(dict.data, elem);                                   \
-        dict.size++;                                                 \
+#define DICT_ADD(dict, key, elem)                                                         \
+    {                                                                                     \
+        char *DICT_INTERN_VAR(key_mallocated) = malloc((strlen(key) + 1) * sizeof(char)); \
+        strcpy(DICT_INTERN_VAR(key_mallocated), key);                                     \
+        LIST_FOREACH(dict.index, key1)                                                    \
+        {                                                                                 \
+            if (strcmp(DICT_INTERN_VAR(key_mallocated), *key1) == 0)                      \
+            {                                                                             \
+                printf("Error: key already existing.\n");                                 \
+                exit(-1);                                                                 \
+            }                                                                             \
+        }                                                                                 \
+        LIST_ADD(dict.index, DICT_INTERN_VAR(key_mallocated));                            \
+        LIST_ADD(dict.data, elem);                                                        \
+        dict.size++;                                                                      \
     }
 
 #define DICT_FOREACH(dict, key) \
     LIST_FOREACH(dict.index, key)
 
-#define DICT_GET(dict, key, dest_ptr)                      \
-    dest_ptr = NULL;                                       \
-    LIST_FOR(dict.index, i_dict_get)                       \
-    {                                                      \
-        if (strcmp(key, dict.index.list[i_dict_get]) == 0) \
-        {                                                  \
-            dest_ptr = &dict.data.list[i_dict_get];        \
-        }                                                  \
+#define DICT_GET(dict, key, dest_ptr)                              \
+    dest_ptr = NULL;                                               \
+    LIST_FOR(dict.index, DICT_INTERN_VAR(i))                       \
+    {                                                              \
+        if (strcmp(key, dict.index.list[DICT_INTERN_VAR(i)]) == 0) \
+        {                                                          \
+            dest_ptr = &dict.data.list[DICT_INTERN_VAR(i)];        \
+        }                                                          \
     }
 
-#define DICT_POP(dict, key)                                    \
-    {                                                          \
-        LIST_FOR(dict.index, i_dict_pop)                       \
-        {                                                      \
-            if (strcmp(key, dict.index.list[i_dict_pop]) == 0) \
-            {                                                  \
-                LIST_POP_INDEX(dict.index, i_dict_pop);        \
-                LIST_POP_INDEX(dict.data, i_dict_pop);         \
-                dict.size--;                                   \
-                break;                                         \
-            }                                                  \
-        }                                                      \
+#define DICT_POP(dict, key)                                            \
+    {                                                                  \
+        LIST_FOR(dict.index, DICT_INTERN_VAR(i))                       \
+        {                                                              \
+            if (strcmp(key, dict.index.list[DICT_INTERN_VAR(i)]) == 0) \
+            {                                                          \
+                LIST_POP_INDEX(dict.index, DICT_INTERN_VAR(i));        \
+                LIST_POP_INDEX(dict.data, DICT_INTERN_VAR(i));         \
+                dict.size--;                                           \
+                break;                                                 \
+            }                                                          \
+        }                                                              \
     }
 
 #define DICT_FREE(dict)    \

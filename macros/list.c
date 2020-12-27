@@ -9,8 +9,7 @@ int main()
     {
         int i;
     } montest = {1};
-    LIST_OF(int)
-    ml;
+    LIST_OF(int) ml;
     LIST_INIT(ml);
     LIST_ADD(ml, 1);
     LIST_ADD(ml, 1);

@@ -17,18 +17,21 @@
 
 #define LIST_INTERN_VAR(name) LIST_INTERNAL_VARIABLE_##name
 
-#define LIST_DEFINE(name, type) \
-    struct name##_LIST          \
-    {                           \
-        int size;               \
-        type *list;             \
-        void (*free_elem)(type); \
-    } name
+#define CAT(a, b) CAT2(a, b) // force expand
+#define CAT2(a, b) a##b      // actually concatenate
+#define UNIQUE_ID() CAT(_uid_, __COUNTER__)
 
-#define LIST_NEW(name, type) \
-    LIST_DEFINE(name, type); \
-    name.size = 0;           \
-    name.list = NULL;        \
+#define LIST_OF(type)                     \
+    struct CAT(LIST_##type_, UNIQUE_ID()) \
+    {                                     \
+        int size;                         \
+        type *list;                       \
+        void (*free_elem)(type);          \
+    }
+
+#define LIST_INIT(name) \
+    name.size = 0;      \
+    name.list = NULL;   \
     name.free_elem = NULL
 
 #define LIST_ADD(l, element)                                                \

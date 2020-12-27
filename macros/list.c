@@ -1,13 +1,17 @@
 #!/usr/local/bin/tcc -run
 #include "list.h"
 
-
 #define PRINT_DELIMITER() printf("-------------\n");
 
 int main()
 {
-    struct test{int i;} montest = {1};
-    LIST_NEW(ml, int);
+    struct test
+    {
+        int i;
+    } montest = {1};
+    LIST_OF(int)
+    ml;
+    LIST_INIT(ml);
     LIST_ADD(ml, 1);
     LIST_ADD(ml, 1);
     LIST_ADD(ml, 3);
@@ -20,11 +24,13 @@ int main()
     PRINT_DELIMITER();
     LIST_FREE(ml);
 
-    LIST_NEW(mls, char *);
+    LIST_OF(char *)
+    mls;
+    LIST_INIT(mls);
     LIST_SET_FREE_FUNC(mls, free);
-    char * s1 = malloc(sizeof(char) * 3);
-    char * s2 = malloc(sizeof(char) * 3);
-    char * s3 = malloc(sizeof(char) * 3);
+    char *s1 = malloc(sizeof(char) * 3);
+    char *s2 = malloc(sizeof(char) * 3);
+    char *s3 = malloc(sizeof(char) * 3);
     LIST_ADD(mls, s1);
     LIST_ADD(mls, s2);
     LIST_ADD(mls, s3);

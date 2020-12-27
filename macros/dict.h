@@ -14,20 +14,21 @@ static inline void free_str(char *str)
     free((void *)str);
 }
 
-#define DICT_NEW(name, type)         \
-    struct name##_DICT               \
-    {                                \
-        LIST_DEFINE(index, char *);  \
-        LIST_DEFINE(data, type);     \
-        int size;                    \
-    } name;                          \
-    name.index.size = 0;             \
-    name.index.list = NULL;          \
+#define DICT_OF(type)                     \
+    struct CAT(LIST_##type_, UNIQUE_ID()) \
+    {                                     \
+        LIST_OF(char *)                   \
+        index;                            \
+        LIST_OF(type)                     \
+        data;                             \
+        int size;                         \
+    }
+
+#define DICT_INIT(name)              \
+    LIST_INIT(name.index);           \
+    LIST_INIT(name.data);            \
     name.index.free_elem = free_str; \
-    name.data.size = 0;              \
-    name.data.list = NULL;           \
-    name.data.free_elem = NULL;      \
-    name.size = 0;
+    name.size = 0
 
 #define DICT_ADD(dict, key, elem)                                                         \
     {                                                                                     \

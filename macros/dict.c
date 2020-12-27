@@ -1,4 +1,4 @@
-#!/ usr / local / bin / tcc - run
+#!/usr/local/bin/tcc -run
 #include "dict.h"
 
 #define PRINT_DELIMITER() printf("-------------\n");
